@@ -9,7 +9,7 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   TabBarIOS,
-  
+
 } from 'react-native';
 
 var Welcome = require('./app/ios/components/welcome');
@@ -17,20 +17,20 @@ var More = require('./app/ios/components/more');
 var About = require('./app/ios/components/about');
 
 class Viewing extends Component {
-  
+
   constructor(props){
     super(props);
     this.state = {
       selectedTab: 'welcome'
     };
   }
-  
+
   render(){
     return(
-      
+
       <TabBarIOS selectedTab={this.state.selectedTab}>
-        
-        <TabBarIOS.Item 
+
+        <TabBarIOS.Item
          selected = {this.state.selectedTab === 'welcome'}
           systemIcon = {'featured'}
 
@@ -41,8 +41,8 @@ class Viewing extends Component {
             }}>
           <Welcome />
         </TabBarIOS.Item>
-        
-       <TabBarIOS.Item 
+
+       <TabBarIOS.Item
           selected = {this.state.selectedTab === 'more'}
           systemIcon = {'more'}
 
@@ -53,7 +53,7 @@ class Viewing extends Component {
             }}>
           <More />
         </TabBarIOS.Item>
-        
+
         <TabBarIOS.Item
             selected = {this.state.selectedTab === 'about'}
             systemIcon = {'contacts'}
@@ -69,6 +69,5 @@ class Viewing extends Component {
     );
   }
 }
-
 
 AppRegistry.registerComponent('Viewing', () => Viewing);

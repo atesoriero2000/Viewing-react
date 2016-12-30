@@ -13,34 +13,72 @@ import {
   Animated,
 } from 'react-native';
 
-var Flower =  require('Viewing/app/ios/images/Flower.jpg');
+var Flower_img =  require('Viewing/app/ios/images/Flower.jpg');
+var Flag_img = require('Viewing/app/ios/images/FlagWaving.jpg');
+var Scout_img = require('Viewing/app/ios/images/boy-scout-emblem.jpg');
+var Eagle_img = require('Viewing/app/ios/images/Eagle.jpg');
+
 var finalBounce = 0;
+var state = 0;
 
 class About extends Component {
-  
+
   constructor(props){
     super(props);
     this.state = {
+      Picture: Flower_img,
       bounceValue: new Animated.Value(0),
     };
+
+    setInterval(() =>{
+      state++;
+      var pic;
+      switch (state) {
+        case 0:
+          pic = Flower_img;
+          break;
+
+        case 1:
+          pic = Flag_img;
+          break;
+
+        case 2:
+          pic = Scout_img;
+          break;
+
+        case 3:
+          pic = Eagle_img;
+          break;
+
+        default:
+          state=0;
+          pic = Flower_img;
+          break;
+
+      }
+      this.setState({Picture: pic})
+      this.state.bounceValue.setValue(0);
+      Animated.spring(
+        this.state.bounceValue,
+        {
+          toValue: 1,
+          friction: 1,
+        }
+      ).start();
+    }, 3000);
   }
 
-  _onPress(){
-   this.state.bounceValue.setValue(Animated.Value(1 + finalBounce));
-    if(this.state.finalBounce == 1){
-      this.state.finalBounce = .2;
-    }else{ 
-      this.state.finalBounce += .2;
-    }
-    Animated.spring(
-      this.state.bounceValue,
-      {
-        toValue: 1 + this.state.finalBounce,
-        friction: 1,
-      }
-    ).start();
+   _onPress(){
+    //  this.state.bounceValue.setValue(1 + finalBounce);
+    // if(this.state.finalBounce == 1){
+    //   this.state.finalBounce = .2;
+    // }else{
+    //   this.state.finalBounce += .2;
+    // }
+
+
   }
-  
+
   render(){
     return(
       <View style={styles.container}>
@@ -49,25 +87,25 @@ class About extends Component {
             Cool animation! Click on the picture!
           </Text>
         </View>
-        
+
         <View style={styles.bottom}>
-          <TouchableOpacity onPress={this._onPress}>
-            <Animated.Image 
+          <TouchableOpacity onPress={() =>this._onPress()}>
+            <Animated.Image
               style={{
-                width: 150, 
-                height: 150, 
+                width: 150,
+                height: 150,
                 transform: [
-                  {scale: this.state.bounceValue}, 
-                ] 
+                  {scale: this.state.bounceValue},
+                ]
               }}
-              source={Flower}
+              source={this.state.Picture}
               />
           </TouchableOpacity>
         </View>
       </View>
     )
   }
-  
+
    componentDidMount(){
     this.state.bounceValue.setValue(1.5);
     Animated.spring(
@@ -78,7 +116,7 @@ class About extends Component {
       }
     ).start();
    }
-  
+
 }
 
 const styles = StyleSheet.create({
@@ -87,7 +125,7 @@ const styles = StyleSheet.create({
    // alignSelf: 'stretch',
    backgroundColor: '#42b7c7',
     flex: 1,
-    
+
   },
   top:{
     flex: 2,
